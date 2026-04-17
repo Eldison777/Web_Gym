@@ -1,0 +1,239 @@
+
+
+/* ── Step 1: Override Bootstrap dark theme variables ────────────────
+   Bootstrap components READ these automatically.
+   Change one value here → every card, form, table updates. */
+[data-bs-theme="dark"] {
+  --bs-body-bg:                  #080808;
+  --bs-body-color:               #f0f0f0;
+  --bs-secondary-bg:             #111111;   /* card bg, input bg  */
+  --bs-tertiary-bg:              #1a1a1a;   /* table header bg    */
+  --bs-secondary-color:          #484848;   /* text-muted         */
+  --bs-border-color:             rgba(255, 255, 255, 0.07);
+  --bs-border-color-translucent: rgba(255, 255, 255, 0.07);
+  --bs-card-bg:                  #0f0f0f;
+  --bs-card-border-color:        rgba(255, 255, 255, 0.07);
+  --bs-table-bg:                 #0f0f0f;
+  --bs-table-hover-bg:           rgba(255, 255, 255, 0.03);
+  --bs-table-hover-color:        #fff;
+  --bs-table-border-color:       rgba(255, 255, 255, 0.07);
+  --bs-table-color:              #f0f0f0;
+  --bs-success:                  #4ade80;
+  --bs-danger:                   #f87171;
+  --bs-link-color:               #f0f0f0;
+  --bs-link-hover-color:         #fff;
+}
+
+/* ── Step 2: Our tokens (Bootstrap has no variable for these) ── */
+:root {
+  --accent: #c9ff47;   /* electric lime — 4 deliberate uses below */
+  --nav-h:  60px;
+  --tr:     0.18s ease;
+}
+
+/* ── Base ── */
+body {
+  padding-top: var(--nav-h);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Navbar
+   backdrop-filter has no Bootstrap utility class ── */
+.site-nav {
+  height: var(--nav-h);
+  background: rgba(8, 8, 8, 0.82) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.navbar-brand {
+  font-weight: 700 !important;
+  letter-spacing: -0.01em;
+  display: flex !important;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Accent use #1: brand mark */
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  background: var(--accent);
+  color: #000;
+  font-size: 0.7rem;
+  font-weight: 900;
+  border-radius: 5px;
+  flex-shrink: 0;
+}
+
+/* ── Hero: z-index stacking (no Bootstrap utility can do this)
+   Layer 0 → video      z-index: 0
+   Layer 1 → overlay    z-index: 1
+   Layer 2 → content    z-index: 2            ── */
+.hero {
+  position: relative;
+  height: 54vh;
+  min-height: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-top: calc(-1 * var(--nav-h));
+  padding-top: var(--nav-h);
+}
+
+.hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  filter: brightness(0.45) saturate(0.9);
+}
+
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to bottom,
+    rgba(8, 8, 8, 0.30) 0%,
+    rgba(8, 8, 8, 0.65) 55%,
+    rgba(8, 8, 8, 1.00) 100%
+  );
+}
+
+.hero__content { position: relative; z-index: 2; }
+
+/* Accent use #2: hero eyebrow */
+.hero__eyebrow {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.hero__title {
+  font-size: clamp(2.6rem, 6vw, 4.8rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: #fff;
+  margin-bottom: 2rem;
+}
+
+/* ── Buttons
+   Bootstrap dark has no white-on-black button ── */
+.btn-white {
+  background: #fff;
+  color: #000;
+  border: none;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  transition: opacity var(--tr), transform var(--tr);
+}
+.btn-white:hover { opacity: 0.85; color: #000; transform: translateY(-1px); }
+
+.btn-ghost {
+  background: transparent;
+  color: #555;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: color var(--tr), border-color var(--tr), transform var(--tr);
+}
+.btn-ghost:hover {
+  color: #f0f0f0;
+  border-color: rgba(255, 255, 255, 0.28);
+  transform: translateY(-1px);
+}
+
+/* index.js generates these class names — must match exactly */
+.btn-outline-primary {
+  color: #f0f0f0 !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+  background: transparent !important;
+}
+.btn-outline-primary:hover {
+  background: rgba(255, 255, 255, 0.07) !important;
+  border-color: rgba(255, 255, 255, 0.28) !important;
+  color: #fff !important;
+}
+
+/* ── Table
+   Bootstrap dark handles bg/borders.
+   We only add: letter-spacing, padding, accent on volume ── */
+.table thead th {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  padding: 0.9rem 1.25rem;
+  white-space: nowrap;
+}
+
+.table tbody td          { padding: 1rem 1.25rem; }
+.table tbody td:first-child { font-weight: 600; color: #fff; }
+
+/* Accent use #3: volume is the most important number */
+.volume-cell {
+  font-weight: 700;
+  color: var(--accent) !important;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Accent use #4: "First Entry" badge
+   Bootstrap's text-primary → our accent instead of blue */
+.text-primary { color: var(--accent) !important; }
+
+/* ── Forms
+   Bootstrap dark theme handles: bg, border, color, placeholder.
+   We only override the focus ring (Bootstrap default is blue) ── */
+.form-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(255, 255, 255, 0.35) !important;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.4);
+  cursor: pointer;
+}
+
+/* ── Back link
+   letter-spacing has no Bootstrap utility ── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #484848;
+  margin-bottom: 0.6rem;
+  transition: color var(--tr);
+}
+.back-link:hover { color: #f0f0f0; }
+
+/* ── Animations ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in    { animation: fadeUp 0.4s ease forwards; }
+.fade-in-d1 { opacity: 0; animation: fadeUp 0.4s 0.08s ease forwards; }
+.fade-in-d2 { opacity: 0; animation: fadeUp 0.4s 0.16s ease forwards; }

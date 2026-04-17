@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Workout Log</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="styles/main.css" />
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar site-nav fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <span class="brand-mark">W</span>
+        Workout Log
+      </a>
+    </div>
+  </nav>
+
+  <!-- Hero: 3-layer stack — video / overlay / content -->
+  <header class="hero">
+    <video class="hero__video" autoplay muted loop playsinline>
+      <source src="../Empty_Gym_Neon_Lights_Slow_Motion.mp4" type="video/mp4" />
+    </video>
+    <div class="hero__overlay"></div>
+    <div class="hero__content container text-center fade-in">
+      <p class="hero__eyebrow">Gym Workout Logger</p>
+      <h1 class="hero__title">My Workouts</h1>
+      <div class="d-flex gap-2 justify-content-center flex-wrap">
+        <a href="add-workout.html" class="btn btn-white rounded-2 px-4">+ Add Workout</a>
+        <button id="btn-clear-all" class="btn btn-ghost rounded-2 px-4">Clear All</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Table section -->
+  <main class="container py-4">
+
+    <!-- Section label -->
+    <div class="d-flex align-items-center justify-content-between mb-3 pb-3 border-bottom fade-in-d1">
+      <span class="text-uppercase fw-bold small text-secondary" style="letter-spacing:0.14em">All entries</span>
+    </div>
+
+    <!-- Workout table -->
+    <div id="table-wrapper" class="d-none fade-in-d2 rounded-2 border overflow-hidden">
+      <table class="table table-hover mb-0 align-middle">
+        <thead>
+          <tr>
+            <th>Exercise</th>
+            <th>Sets</th>
+            <th>Reps</th>
+            <th>Weight (kg)</th>
+            <th>Volume (kg)</th>
+            <th>vs Last Session</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="workout-tbody"></tbody>
+      </table>
+    </div>
+
+    <!-- Empty state -->
+    <div id="empty-state" class="d-none text-center py-5 fade-in-d2">
+      <p class="text-secondary mb-0" style="line-height:1.8">
+        No workouts logged yet.<br />
+        Click <strong class="text-white">+ Add Workout</strong> to get started.
+      </p>
+    </div>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="scripts/index.js"></script>
+</body>
+</html>
