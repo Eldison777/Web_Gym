@@ -1,5 +1,3 @@
-// ── Load workout on page init ─────────────────────────────────────────────────
-
 const editId       = Number(localStorage.getItem('workoutToEditId'));
 const workouts     = JSON.parse(localStorage.getItem('workouts') || '[]');
 const workoutIndex = workouts.findIndex(function (w) { return w.id === editId; });
@@ -19,7 +17,6 @@ if (workoutIndex === -1) {
   document.getElementById('date').value     = w.date;
 }
 
-// ── Form submission ───────────────────────────────────────────────────────────
 
 form.addEventListener('submit', function (e) {
   e.preventDefault();

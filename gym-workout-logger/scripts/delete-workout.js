@@ -1,7 +1,3 @@
-// delete-workout.js — module script
-
-// ── Load workout on page init ─────────────────────────────────────────────────
-
 const deleteId = Number(localStorage.getItem('workoutToDeleteId'));
 const workouts = JSON.parse(localStorage.getItem('workouts') || '[]');
 const workout  = workouts.find(w => w.id === deleteId);
@@ -47,7 +43,6 @@ if (!workout) {
   `).join('');
 }
 
-// ── Delete confirmation ───────────────────────────────────────────────────────
 
 document.getElementById('btn-confirm-delete').addEventListener('click', function () {
   const stored  = JSON.parse(localStorage.getItem('workouts') || '[]');

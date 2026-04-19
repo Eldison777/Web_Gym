@@ -1,12 +1,8 @@
-// index.js — module script (strict mode is automatic, no need for 'use strict')
-
-// ── localStorage helpers ──────────────────────────────────────────────────────
-
 function getWorkouts() {
   return JSON.parse(localStorage.getItem('workouts') || '[]');
 }
 
-// ── Utility functions ─────────────────────────────────────────────────────────
+
 
 function escapeHTML(str) {
   return String(str)
@@ -23,7 +19,6 @@ function formatDate(dateStr) {
     .toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
 }
 
-// ── vs Last Session ───────────────────────────────────────────────────────────
 
 function getPreviousVolume(workouts, currentIndex) {
   const current = workouts[currentIndex];
@@ -52,7 +47,6 @@ function vsLastSessionHTML(current, prev) {
   return '<span class="vs-badge text-secondary">= Same</span>';
 }
 
-// ── Stats bar ─────────────────────────────────────────────────────────────────
 
 function renderStats(workouts) {
   const bar = document.getElementById('stats-bar');
@@ -60,25 +54,20 @@ function renderStats(workouts) {
   if (workouts.length === 0) { bar.classList.add('d-none'); return; }
   bar.classList.remove('d-none');
 
-  // Total workouts
   document.getElementById('stat-total').textContent = workouts.length;
 
-  // Total volume — reduce() sums sets × reps × weight across every entry
   const totalVolume = workouts.reduce((sum, w) => sum + w.sets * w.reps * w.weight, 0);
   document.getElementById('stat-volume').textContent = totalVolume.toLocaleString() + ' kg';
 
-  // Most trained — build a count map, sort by value descending
   const counts = {};
   workouts.forEach(w => { const k = w.exercise.trim().toLowerCase(); counts[k] = (counts[k] || 0) + 1; });
   const top = Object.keys(counts).sort((a, b) => counts[b] - counts[a])[0];
   document.getElementById('stat-exercise').textContent = top || '—';
 
-  // Last session — sort date strings, pick the last
   const lastDate = workouts.map(w => w.date).sort().at(-1);
   document.getElementById('stat-date').textContent = lastDate ? formatDate(lastDate) : '—';
 }
 
-// ── Render table ──────────────────────────────────────────────────────────────
 
 function render() {
   const workouts    = getWorkouts();
@@ -121,7 +110,6 @@ function render() {
   });
 }
 
-// ── Table button clicks (event delegation) ────────────────────────────────────
 
 document.getElementById('workout-tbody').addEventListener('click', function (e) {
   const btn = e.target.closest('button[data-action]');
@@ -138,7 +126,6 @@ document.getElementById('workout-tbody').addEventListener('click', function (e) 
   }
 });
 
-// ── Clear All ─────────────────────────────────────────────────────────────────
 
 document.getElementById('btn-clear-all').addEventListener('click', function () {
   if (!getWorkouts().length) return;
@@ -148,11 +135,8 @@ document.getElementById('btn-clear-all').addEventListener('click', function () {
   }
 });
 
-// ── Init ──────────────────────────────────────────────────────────────────────
 
 render();
-
-// ── DummyJSON API — motivational quote ───────────────────────────────────────
 
 try {
   const response = await fetch('https://dummyjson.com/quotes/random');

@@ -1,8 +1,5 @@
-// ── Set today's date as default ───────────────────────────────────────────────
-
 document.getElementById('date').value = new Date().toISOString().slice(0, 10);
 
-// ── Form submission ───────────────────────────────────────────────────────────
 
 document.getElementById('add-workout-form').addEventListener('submit', function (e) {
   e.preventDefault();
