@@ -22,12 +22,18 @@
   <!-- Hero: 3-layer stack — video / overlay / content -->
   <header class="hero">
     <video class="hero__video" autoplay muted loop playsinline>
-      <source src="../Empty_Gym_Neon_Lights_Slow_Motion.mp4" type="video/mp4" />
+      <track kind="descriptions" src="video.vtt" default />
+      <source src="Empty_Gym_Neon_Lights_Slow_Motion.mp4" type="video/mp4" />
     </video>
     <div class="hero__overlay"></div>
     <div class="hero__content container text-center fade-in">
       <p class="hero__eyebrow">Gym Workout Logger</p>
       <h1 class="hero__title">My Workouts</h1>
+
+      <!-- Quote injected here by loadQuote() in index.js -->
+      <p id="hero-quote" class="fst-italic text-secondary small mb-4"
+         style="max-width:460px;margin-left:auto;margin-right:auto;min-height:1.2rem"></p>
+
       <div class="d-flex gap-2 justify-content-center flex-wrap">
         <a href="add-workout.html" class="btn btn-white rounded-2 px-4">+ Add Workout</a>
         <button id="btn-clear-all" class="btn btn-ghost rounded-2 px-4">Clear All</button>
@@ -38,28 +44,58 @@
   <!-- Table section -->
   <main class="container py-4">
 
+    <!-- Stats bar — hidden until workouts exist, populated by renderStats() -->
+    <div id="stats-bar" class="row g-3 mb-4 d-none fade-in-d1">
+      <div class="col-6 col-md-3">
+        <div class="card p-3 text-center">
+          <div class="fw-black fs-2 mb-1" id="stat-total">—</div>
+          <div class="small text-secondary text-uppercase" style="letter-spacing:0.08em">Total Workouts</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="card p-3 text-center">
+          <div class="fw-black fs-4 mb-1 volume-cell" id="stat-volume">—</div>
+          <div class="small text-secondary text-uppercase" style="letter-spacing:0.08em">Total Volume</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="card p-3 text-center">
+          <div class="fw-bold fs-6 mb-1 text-truncate" id="stat-exercise">—</div>
+          <div class="small text-secondary text-uppercase" style="letter-spacing:0.08em">Most Trained</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="card p-3 text-center">
+          <div class="fw-bold fs-6 mb-1" id="stat-date">—</div>
+          <div class="small text-secondary text-uppercase" style="letter-spacing:0.08em">Last Session</div>
+        </div>
+      </div>
+    </div>
+
     <!-- Section label -->
     <div class="d-flex align-items-center justify-content-between mb-3 pb-3 border-bottom fade-in-d1">
       <span class="text-uppercase fw-bold small text-secondary" style="letter-spacing:0.14em">All entries</span>
     </div>
 
     <!-- Workout table -->
-    <div id="table-wrapper" class="d-none fade-in-d2 rounded-2 border overflow-hidden">
-      <table class="table table-hover mb-0 align-middle">
-        <thead>
-          <tr>
-            <th>Exercise</th>
-            <th>Sets</th>
-            <th>Reps</th>
-            <th>Weight (kg)</th>
-            <th>Volume (kg)</th>
-            <th>vs Last Session</th>
-            <th>Date</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="workout-tbody"></tbody>
-      </table>
+    <div id="table-wrapper" class="d-none fade-in-d2 rounded-2 border">
+      <div class="table-responsive">
+        <table class="table table-hover mb-0 align-middle">
+          <thead>
+            <tr>
+              <th>Exercise</th>
+              <th class="d-none d-md-table-cell">Sets</th>
+              <th class="d-none d-md-table-cell">Reps</th>
+              <th>Weight (kg)</th>
+              <th>Volume (kg)</th>
+              <th class="d-none d-md-table-cell">vs Last Session</th>
+              <th class="d-none d-sm-table-cell">Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="workout-tbody"></tbody>
+        </table>
+      </div>
     </div>
 
     <!-- Empty state -->
@@ -73,6 +109,6 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="scripts/index.js"></script>
+  <script type="module" src="scripts/index.js"></script>
 </body>
 </html>

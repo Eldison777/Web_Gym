@@ -1,10 +1,10 @@
-'use strict';
+// delete-workout.js — module script
 
 // ── Load workout on page init ─────────────────────────────────────────────────
 
 const deleteId = Number(localStorage.getItem('workoutToDeleteId'));
 const workouts = JSON.parse(localStorage.getItem('workouts') || '[]');
-const workout  = workouts.find(function (w) { return w.id === deleteId; });
+const workout  = workouts.find(w => w.id === deleteId);
 
 const notFound       = document.getElementById('not-found');
 const confirmWrapper = document.getElementById('confirm-wrapper');
@@ -12,17 +12,17 @@ const detailsEl      = document.getElementById('workout-details');
 
 function escapeHTML(str) {
   return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+    .replaceAll('&',  '&amp;')
+    .replaceAll('<',  '&lt;')
+    .replaceAll('>',  '&gt;')
+    .replaceAll('"', '&quot;');
 }
 
 function formatDate(dateStr) {
   if (!dateStr) return '';
   const [year, month, day] = dateStr.split('-').map(Number);
-  const d = new Date(year, month - 1, day);
-  return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+  return new Date(year, month - 1, day)
+    .toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
 }
 
 if (!workout) {
@@ -39,22 +39,20 @@ if (!workout) {
     { label: 'Date',     value: formatDate(workout.date) },
   ];
 
-  detailsEl.innerHTML = rows.map(function (r) {
-    return `
-      <div class="detail-row">
-        <span class="detail-label">${r.label}</span>
-        <span class="detail-value">${r.value}</span>
-      </div>
-    `;
-  }).join('');
+  detailsEl.innerHTML = rows.map(r => `
+    <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+      <span class="text-secondary small text-uppercase fw-bold" style="letter-spacing:0.08em">${r.label}</span>
+      <span class="fw-semibold">${r.value}</span>
+    </div>
+  `).join('');
 }
 
 // ── Delete confirmation ───────────────────────────────────────────────────────
 
 document.getElementById('btn-confirm-delete').addEventListener('click', function () {
-  const stored = JSON.parse(localStorage.getItem('workouts') || '[]');
-  const updated = stored.filter(function (w) { return w.id !== deleteId; });
+  const stored  = JSON.parse(localStorage.getItem('workouts') || '[]');
+  const updated = stored.filter(w => w.id !== deleteId);
   localStorage.setItem('workouts', JSON.stringify(updated));
   localStorage.removeItem('workoutToDeleteId');
-  window.location.href = 'index.html';
+  globalThis.location.href = 'index.html';
 });
